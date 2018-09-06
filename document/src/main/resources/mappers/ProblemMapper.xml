@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zsz.dao.ProblemMapper">
+
+    <!-- 动态sql备用-->
+    <sql id="value">
+        <set>
+            <if test="modular!=null">
+                modular=#{modular},
+            </if>
+            <if test="content!=null">
+                content=#{content},
+            </if>
+            <if test="describe!=null">
+                `describe`=#{describe},
+            </if>
+            <if test="createdate!=null">
+                createdate=#{createdate},
+            </if>
+            <if test="man!=null">
+                man=#{man},
+            </if>
+            <if test="priority!=null">
+                priority=#{priority},
+            </if>
+            <if test="startdate!=null">
+                startdate=#{startdate},
+            </if>
+            <if test="enddate!=null">
+                enddate=#{enddate},
+            </if>
+            <if test="state!=null">
+                state=#{state},
+            </if>
+            <if test="jjr!=null">
+                jjr=#{jjr},
+            </if>
+            <if test="remarks!=null">
+                remarks=#{remarks}
+            </if>
+        </set>
+    </sql>
+
+    <!-- 查询问题列表 -->
+    <select id="findAllProblem" resultType="Problem">
+        select * from  problem
+    </select>
+
+    <!-- 添加问题 -->
+    <insert id="addProblem" parameterType="Problem" useGeneratedKeys="true" keyProperty="id">
+        insert into problem <include refid="value"/>
+    </insert>
+
+    <!-- 根据ID删除问题 -->
+    <delete id="delProblem" parameterType="int">
+        delete from problem WHERE id=#{id}
+    </delete>
+
+</mapper>

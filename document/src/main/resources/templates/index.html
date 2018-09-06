@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/js/laydate.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-theme.min.css}"/>
+    <title>OA系统问题/变更列表</title>
+
+</head>
+<body>
+<div style="width:80%;margin: auto;">
+
+    <!-- 问题Modal -->
+    <form action="#" id="wtfrom" onsubmit="return false" method="post">
+        <div class="modal fade" id="WTModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">问题添加</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table" width="100%" id="wt_tab">
+                            <tbody>
+                            <tr>
+                                <td>模块</td>
+                                <td><input type="text" name="modular" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>功能内容</td>
+                                <td><input type="text" name="content" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>问题描述</td>
+                                <td><input type="text" name="describe" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>提出时间</td>
+                                <td><input id="tc_date" class="layui-input" type="text" name="createdate"></td>
+                            </tr>
+                            <tr>
+                                <td>提出人</td>
+                                <td><input type="text" name="man" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>优先级</td>
+                                <td><input type="text" name="priority" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>计划开始时间</td>
+                                <td><input type="text" name="startdate" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>计划结束时间</td>
+                                <td><input type="text" name="enddate" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>状态</td>
+                                <td><input type="text" name="state" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>解决人</td>
+                                <td><input type="text" name="jjr" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>备注</td>
+                                <td><input type="text" name="remarks" class="form-control"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="save" type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- 导航标签区 -->
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#WT" role="tab" data-toggle="tab">AmecoOA——问题列表</a></li>
+        <li><a href="#XQ" role="tab" data-toggle="tab">AmecoOA——需求变更</a></li>
+    </ul>
+
+    <!-- 面板区 -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="WT">
+            <div style="margin-top:2%">
+                <button class="btn btn-info" type="button" data-toggle="modal" data-target="#WTModal">问题添加</button>
+            </div>
+            <table class="table table-striped" width="100%">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>模块</th>
+                    <th>功能内容</th>
+                    <th>问题描述</th>
+                    <th>提出时间</th>
+                    <th>提出人</th>
+                    <th>优先级</th>
+                    <th>计划开始时间</th>
+                    <th>计划结束时间</th>
+                    <th>状态</th>
+                    <th>解决人</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="problem : ${problemList}">
+                    <td th:text="${problem.id}"></td>
+                    <td th:text="${problem.modular}"></td>
+                    <td th:text="${problem.content}"></td>
+                    <td th:text="${problem.describe}"></td>
+                    <td th:text="${problem.createdate}"></td>
+                    <td th:text="${problem.man}"></td>
+                    <td th:text="${problem.priority}"></td>
+                    <td th:text="${problem.startdate}"></td>
+                    <td th:text="${problem.enddate}"></td>
+                    <td th:text="${problem.state}"></td>
+                    <td th:text="${problem.jjr}"></td>
+                    <td th:text="${problem.remarks}"></td>
+                    <td>
+                         <a th:href="@{/wtdel(id=${problem.id})}"><button class="btn btn-danger" type="button" onclick="return confirm('你确定删除吗?')">删除</button></a>
+                     </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="XQ">
+            <div style="margin-top:2%">
+                <button class="btn btn-info" type="button">需求添加</button>
+            </div>
+            <!-- 需求变更 -->
+            <table class="table table-striped" width="100%">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>模块</th>
+                    <th>功能内容</th>
+                    <th>问题描述</th>
+                    <th>提出时间</th>
+                    <th>提出人</th>
+                    <th>优先级</th>
+                    <th>计划开始时间</th>
+                    <th>计划结束时间</th>
+                    <th>状态</th>
+                    <th>解决人</th>
+                    <th>备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>123213213213</td>
+                    <td>档案查看权限</td>
+                    <td>每个部门的档案管理员只...</td>
+                    <td>高</td>
+                    <td>2018/4/25</td>
+                    <td>2018/5/30</td>
+                    <td>已修改</td>
+                    <td>aaa</td>
+                    <td>2018/6/4</td>
+                    <td>未测试</td>
+                    <td>备注</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function(){
+        //问题模态框，点击save按钮发送ajax请求
+        $("#save").click(function(){
+            $.ajax({
+                type: "POST",//方法类型
+                dataType: "text",//预期服务器返回的数据类型
+                url: "add" ,//url
+                data: $('#wtfrom').serialize(),
+                success: function (result) {
+                    if(result=="success"){
+                        $("#wt_tab input").attr("value","");//清空Model值
+                        $('#myModal').modal('toggle');//响应成功后，关闭Model
+                        location.reload();//刷新页面，重新加载数据
+                    }
+                },
+                error : function() {
+                    alert("保存动作异常，请重新保存。");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
