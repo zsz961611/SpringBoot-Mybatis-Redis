@@ -6,6 +6,17 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
 
+spring:
+  redis:
+    host: 192.168.253.128
+    #password: redispassword
+    port: 6379
+    pool:
+      max-idle: 100
+      min-idle: 1
+      max-active: 1000
+      max-wait: -1
+
   thymeleaf:
      cache: false
      prefix: classpath:/templates/

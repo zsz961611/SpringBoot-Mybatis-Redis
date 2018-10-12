@@ -73,6 +73,15 @@
             <version>5.1.45</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
         <!-- Tomcat -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
